@@ -25,6 +25,9 @@ env:
     
   # Organization Id limiting permissions to S3 bucket
   OrganizationId: o-j00zam5ytf
+  
+  # Approvers for manual approval
+  Approvers: szamfir
 
 # ----------------------------------------
 # GitHub Job to be run
@@ -53,6 +56,13 @@ jobs:
 
       - name: Check Template Integrity
         run: cfn-lint --template "eq_s3_org_read_only.yml" --regions ${{ env.region }}
+
+      - name: Manual Workflow Approval
+        # You may pin to the exact commit or the version.
+        # uses: trstringer/manual-approval@c4714a2254526b2f5d7edfe3e6477ee7a1e8e7b3
+        uses: trstringer/manual-approval@v1.2.0
+        with:
+          approvers: ${{ env.Approvers }}
 
       - name: Deploy S3 Buckets CloudFormation Stacks
         id: s3-buckets
