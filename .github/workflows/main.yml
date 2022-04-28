@@ -3,6 +3,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
+      stackName:
+        description: "Name of AWS Stack to be create"
+        required: true
+        default: s3-bucket-github-stack
       region:
         description: "AWS Region"
         required: true
@@ -32,6 +36,6 @@ jobs:
         id: s3-buckets
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
         with:
-          name:  s3-buckets
+          name:  ${{ github.event.inputs.stackName }}
           template: eq_s3_org_read_only.yml
           parameter-overrides: "S3BucketName=${{ github.event.inputs.S3BucketName }}, OrganizationId=${{ github.event.inputs.OrganizationId }}"
