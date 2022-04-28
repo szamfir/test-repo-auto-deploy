@@ -1,5 +1,8 @@
 name: Deploy CloudFormation Stacks# Controls when the action will run.
 on:
+  push:
+    branches:
+      - main
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -24,18 +27,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Install CFN Linter
-        run: pip install cfn-lint
-      - name: Check Template Integrity
-        run: cfn-lint --template "eq_s3_org_read_only.yml"
+        uses: actions/checkout@v3      
       - name: Configure AWS credentials
         id: creds
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region }}       
+          aws-region: ${{ github.event.inputs.region }}
+      - name: Install CFN Linter
+        run: pip install cfn-lint
+      - name: Check Template Integrity
+        run: cfn-lint --template "eq_s3_org_read_only.yml" --regions ${{ github.event.inputs.region }}       
       - name: Deploy S3 Buckets CloudFormation Stacks
         id: s3-buckets
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
