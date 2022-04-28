@@ -25,7 +25,7 @@ with:
   role-to-assume: arn:aws:iam::077179288803:user/serban-github-prog-user
   aws-region: us-east-1
 jobs:
-  cfndeployment:
+  cfn-deployment:
     - name: Checkout
       uses: actions/checkout@v2
 
