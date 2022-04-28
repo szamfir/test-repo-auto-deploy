@@ -1,48 +1,63 @@
-name: Deploy CloudFormation Stacks# Controls when the action will run.
+name: Deploy CloudFormation Stack.
+
+# Only deploy if push occurs on main branch
 on:
   push:
     branches:
       - main
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-    inputs:
-      stackName:
-        description: "Name of AWS Stack to be create"
-        required: true
-        default: s3-bucket-github-stack
-      region:
-        description: "AWS Region"
-        required: true
-        default: "us-east-1"
-      S3BucketName:
-        description: "S3 Bucket Name"
-        required: true
-        default: "acme-devops-code-2"
-      OrganizationId:
-        description: "Organization Id limiting permissions to S3 bucket"
-        required: true
-        default: "o-j00zam5ytf"
+# Set Environment Variables
+env:
+  # ----------------------------------------
+  # CloudFormation Stack Variables
+  # ----------------------------------------
+  # Name of AWS Stack to be created
+  stackName: s3-bucket-github-stack
+
+  # AWS Region where stack will be created 
+  region: us-east-1
+
+  # ----------------------------------------
+  # CloudFormation Template Variables
+  # (specific to template being deployed) 
+  # ----------------------------------------
+  # S3 Bucket Name
+  S3BucketName: acme-devops-code-2
+    
+  # Organization Id limiting permissions to S3 bucket
+  OrganizationId: o-j00zam5ytf
+
+# ----------------------------------------
+# GitHub Job to be run
+# 1) Checkout branch where this file resides
+# 2) Configure AWS Credentials with repo secrets
+# 3) Check template integrity
+# 4) Deploy template to account/region 
+# ----------------------------------------    
 jobs:
   cfn-deployment:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3      
+        uses: actions/checkout@v3
+
       - name: Configure AWS credentials
         id: creds
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region }}
+          aws-region: $region
+
       - name: Install CFN Linter
         run: pip install cfn-lint
+
       - name: Check Template Integrity
-        run: cfn-lint --template "eq_s3_org_read_only.yml" --regions ${{ github.event.inputs.region }}       
+        run: cfn-lint --template "eq_s3_org_read_only.yml" --regions $region
+
       - name: Deploy S3 Buckets CloudFormation Stacks
         id: s3-buckets
         uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
         with:
           name:  ${{ github.event.inputs.stackName }}
           template: eq_s3_org_read_only.yml
-          parameter-overrides: "S3BucketName=${{ github.event.inputs.S3BucketName }}, OrganizationId=${{ github.event.inputs.OrganizationId }}"
+          parameter-overrides: "S3BucketName=$S3BucketName, OrganizationId=$OrganizationId"
