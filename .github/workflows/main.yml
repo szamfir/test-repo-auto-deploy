@@ -63,7 +63,7 @@ jobs:
         uses: trstringer/manual-approval@v1.2.0
         with:
           approvers: ${{ env.Approvers }}
-          secrets: ${{ secrets.APPROVAL_TOKEN }}
+          secret: ${{ secrets.APPROVAL_TOKEN }}
 
       - name: Deploy S3 Buckets CloudFormation Stacks
         id: s3-buckets
