@@ -46,13 +46,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ env.$region }}
+          aws-region: ${{ env.region }}
 
       - name: Install CFN Linter
         run: pip install cfn-lint
 
       - name: Check Template Integrity
-        run: cfn-lint --template "eq_s3_org_read_only.yml" --regions ${{ env.$region }}
+        run: cfn-lint --template "eq_s3_org_read_only.yml" --regions ${{ env.region }}
 
       - name: Deploy S3 Buckets CloudFormation Stacks
         id: s3-buckets
