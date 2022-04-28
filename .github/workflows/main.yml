@@ -1,0 +1,37 @@
+name: Deploy CloudFormation Stacks# Controls when the action will run.
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      region:
+        description: "AWS Region"
+        required: true
+        default: "us-east-1"
+      S3BucketName:
+        description: "S3 Bucket Name"
+        required: true
+        default: "acme-devops-code-2"
+      OrganizationId:
+        description: "Organization Id limiting permissions to S3 bucket"
+        required: true
+        default: "o-j00zam5ytf"
+jobs:
+  cfn-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2      
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ github.event.inputs.region }}       
+      - name: Deploy S3 Buckets CloudFormation Stacks
+        id: s3-buckets
+        uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
+        with:
+          name:  s3-buckets
+          template: eq_s3_org_read_only.yml
+          parameter-overrides: "S3BucketName=${{ github.event.inputs.S3BucketName }}, OrganizationId=${{ github.event.inputs.OrganizationId }}"
