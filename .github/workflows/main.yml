@@ -26,27 +26,27 @@ with:
   aws-region: us-east-1
 jobs:
   cfn-deployment:
-    - name: Checkout
-      uses: actions/checkout@v2
-
-    name: Deploy to AWS Stack
     runs-on: ubuntu-latest
-    # You may pin to the exact commit or the version.
-    # uses: aws-actions/configure-aws-credentials@05b148adc31e091bafbaf404f745055d4d3bc9d2
-    steps:
-      - name: Configure AWS Credentials
-        id: creds
-        uses: aws-actions/configure-aws-credentials@v1
-        with:              
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ github.event.inputs.region }} 
-      - name: Deploy S3 Buckets CloudFormation Stacks
-        id: s3-buckets
-        uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
-        with:
-          name:  s3-buckets
-          template: eq_s3_org_read_only.yml
-          parameter-overrides: >-
-            BucketName=${{ github.event.inputs.bucketName }}
-            OrganizationId= ${{ github.event.inputs.organizationId }}
+       steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+
+        # You may pin to the exact commit or the version.
+        # uses: aws-actions/configure-aws-credentials@05b148adc31e091bafbaf404f745055d4d3bc9d2
+     
+        - name: Configure AWS Credentials
+          id: creds
+          uses: aws-actions/configure-aws-credentials@v1
+          with:              
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ github.event.inputs.region }} 
+        - name: Deploy S3 Buckets CloudFormation Stacks
+          id: s3-buckets
+          uses: aws-actions/aws-cloudformation-github-deploy@v1.0.3
+          with:
+            name:  s3-buckets
+            template: eq_s3_org_read_only.yml
+            parameter-overrides: >-
+              BucketName=${{ github.event.inputs.bucketName }}
+              OrganizationId= ${{ github.event.inputs.organizationId }}
