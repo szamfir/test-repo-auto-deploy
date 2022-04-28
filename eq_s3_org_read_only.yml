@@ -18,7 +18,7 @@ Parameters:
   S3BucketName:
     Type: String
     Description: Root Name of S3 Bucket
-    Default: acme-devops-code
+    Defaults: acme-devops-code
 
   OrganizationId:
     Type: String
