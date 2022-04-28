@@ -7,11 +7,11 @@ on:
         description: "AWS Region"
         required: true
         default: "us-east-1"
-      bucketName:
+      S3BucketName:
         description: "S3 Bucket Name"
         required: true
         default: "acme-devops-code-2"
-      organizationId:
+      OrganizationId:
         description: "Organization Id limiting permissions to S3 bucket"
         required: true
         default: "o-j00zam5ytf"
@@ -35,5 +35,5 @@ jobs:
           name:  s3-buckets
           template: eq_s3_org_read_only.yml
           parameter-overrides: >-
-            BucketName=${{ github.event.inputs.bucketName }}
-            OrganizationId= ${{ github.event.inputs.organizationId }}
+            S3BucketName=${{ github.event.inputs.S3BucketName }}
+            OrganizationId=${{ github.event.inputs.OrganizationId }}
