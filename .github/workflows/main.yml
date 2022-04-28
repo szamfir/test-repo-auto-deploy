@@ -34,6 +34,4 @@ jobs:
         with:
           name:  s3-buckets
           template: eq_s3_org_read_only.yml
-          parameter-overrides: >-
-            S3BucketName=${{ github.event.inputs.S3BucketName }},
-            OrganizationId=${{ github.event.inputs.OrganizationId }}
+          parameter-overrides:"S3BucketName=${{ github.event.inputs.S3BucketName }},OrganizationId=${{ github.event.inputs.OrganizationId }}"
