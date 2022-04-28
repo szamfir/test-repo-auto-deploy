@@ -24,7 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2      
+        uses: actions/checkout@v2
+      - name: Install CFN Linter
+        run: echo 'pip install cfn-lint'
+      - name: Check Template Integrity
+        run: echo 'cfn-lint --template "eq_s3_org_read_only.yml" --regions ${{ secrets.AWS_ACCESS_KEY_ID }}'
       - name: Configure AWS credentials
         id: creds
         uses: aws-actions/configure-aws-credentials@v1
