@@ -26,9 +26,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install CFN Linter
-        run: echo 'pip install cfn-lint'
+        run: pip install cfn-lint
       - name: Check Template Integrity
-        run: echo 'cfn-lint --template "eq_s3_org_read_only.yml"'
+        run: cfn-lint --template "eq_s3_org_read_only.yml"
       - name: Configure AWS credentials
         id: creds
         uses: aws-actions/configure-aws-credentials@v1
