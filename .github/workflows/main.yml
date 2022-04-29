@@ -5,16 +5,16 @@ on:
   push:
     branches:
       - main
-  paths-ignore:
-    - ".github/**"
-    - "README.md"
+    paths-ignore:
+      - ".github/**"
+      - "README.md"
 
-#   workflow_dispatch:
-#     inputs:
-#       ManualTrigger:
-#         description: "Placeholder to manually trigger workflow"
-#         required: false
-#         default: "Yes" 
+  workflow_dispatch:
+    inputs:
+      ManualTrigger:
+        description: "Placeholder to manually trigger workflow"
+        required: false
+        default: "Yes" 
 # Set Environment Variables
 env:
   # ----------------------------------------
