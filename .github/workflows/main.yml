@@ -82,6 +82,3 @@ jobs:
           name:  ${{ env.stackName }}
           template: eq_s3_org_read_only.yml
           parameter-overrides: "S3BucketName=${{ env.S3BucketName }}, OrganizationId=${{ env.OrganizationId }}"
-          
-      - name: Check AWS CLI
-        run: aws sts get-caller-identity
