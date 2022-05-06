@@ -22,5 +22,5 @@ phases:
       - echo Starting CloudFormation Template Validation
       - aws cloudformation validate-template --template-body "file://$(pwd)/eq_s3_org_read_only.yml"     
       - echo Starting Checkov Security Compliance Check
-      - checkov -d ./ --skip-check CKV_AWS_18
+      - checkov -d ./ --skip-check CKV_AWS_18,CKV_AWS_19
       
