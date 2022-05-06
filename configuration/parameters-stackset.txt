@@ -1,0 +1,10 @@
+[  
+  {
+        "ParameterKey": "S3BucketName",
+        "ParameterValue": "acme-devops-code-2"
+  },
+  {
+        "ParameterKey": "OrganizationId",
+        "ParameterValue": "o-j00zam5ytf"
+  }
+]
