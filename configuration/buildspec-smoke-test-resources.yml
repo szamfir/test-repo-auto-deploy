@@ -1,9 +1,0 @@
-version: 0.2
-phases:
-
-  install:
-    commands:      
-      - pip install awscli
-  build:
-    commands:
-      - aws s3api get-bucket-versioning --bucket acme-devops-code-2-077179288803-us-east-1    

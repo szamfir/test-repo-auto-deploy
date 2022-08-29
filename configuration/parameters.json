@@ -1,7 +1,0 @@
-{
-  "Parameters":
-  { 
-    "S3BucketName": "acme-devops-code-2",
-    "OrganizationId":" o-j00zam5ytf"
-  }
-}
