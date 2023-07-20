@@ -34,7 +34,7 @@ jobs:
           echo "GITHUB_BASE_REF:$GITHUB_BASE_REF"
           printenv
 
-      # run terraform apply on all artifacts
+      # run terraform apply on all artifacts...
       - name: Terraform Apply
         id: apply
         working-directory: ${{env.upload_dir}}             
