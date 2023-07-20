@@ -1,0 +1,37 @@
+name: Apply Terraform Plan
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+  actions: read
+
+jobs:   
+  get-environments:
+    if: ${{github.actor != 'github-actions'}}    
+    runs-on: ubuntu-latest    
+    outputs:      
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # run terraform apply on all artifacts
+      - name: Terraform Apply
+        id: apply
+        working-directory: ${{env.upload_dir}}             
+        env:          
+          GITHUB_TOKEN: ${{ github.token }}      
+        shell: bash
+        run: |
+
+          ref_head = $GITHUB_HEAD_REF
+          run_id=$(gh run list --workflow "Create Terraform Plan" --branch $ref_head --limit 1 --json databaseId | awk -F':' '{print $2}' | awk -F'}' '{print $1}')
+          echo $run_id
+          run_id2=$(gh run list --workflow "Create Terraform Plan" --branch $GITHUB_HEAD_REF --limit 1 --json databaseId | awk -F':' '{print $2}' | awk -F'}' '{print $1}')
+          echo $run_id2

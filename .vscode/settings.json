@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "szamfir",
+        "projectKey": "szamfir_test-repo-auto-deploy"
+    }
+}
