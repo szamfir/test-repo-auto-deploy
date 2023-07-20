@@ -31,6 +31,8 @@ jobs:
           echo "GITHUB_REF:$GITHUB_REF"
           echo "GITHUB_HEAD_REF:$GITHUB_HEAD_REF"
           echo "GITHUB_REF_NAME:$GITHUB_REF_NAME"
+          echo "GITHUB_BASE_REF:$GITHUB_BASE_REF"
+          printenv
 
       # run terraform apply on all artifacts
       - name: Terraform Apply
