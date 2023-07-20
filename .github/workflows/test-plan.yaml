@@ -1,0 +1,26 @@
+name: Create Terraform Plan
+on:
+  workflow_dispatch:         
+  pull_request:    
+    branches:
+      - main
+
+jobs:   
+  get-environments:
+    if: ${{github.actor != 'github-actions'}}    
+    runs-on: ubuntu-latest    
+    outputs:      
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Get modified environments
+        id: set-matrix             
+        env:          
+          GITHUB_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |          
+          # Get list of modified accounts          
+          echo "Pipeline has run"
