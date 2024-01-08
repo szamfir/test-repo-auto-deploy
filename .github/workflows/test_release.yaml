@@ -3,10 +3,10 @@ on:
   workflow_dispatch:
     inputs:
       update_zip_only:
-          description: Will delete and update the artifact from an existing draft release.
-          type: boolean
-          default: false
-          required: true
+        description: Will delete and update the artifact from an existing draft release.
+        type: boolean
+        default: false
+        required: true
       body:
         description: A description of your release in markdown format (default is to autogenerate release notes).
         type: string
@@ -47,7 +47,7 @@ on:
 permissions:
   id-token: write
   contents: read
-  
+
 jobs:
   create-draft-release:
    
