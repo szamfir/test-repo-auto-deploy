@@ -41,9 +41,7 @@ on:
       GIT_USER_NAME:
         description: "Secret named ECR_REPO_BASE_NAME for the CI user name."
         required: true
-      GIT_REPO_TOKEN:
-        description: Pass GitHub Token to allow for release creation.
-        required: true
+
  #token permissions
 permissions:
   id-token: write
