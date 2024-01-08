@@ -45,6 +45,11 @@ on:
         required: true
 
 jobs:
+  #token permissions
+  permissions:
+    id-token: write
+    contents: read
+
   create-draft-release:
     uses: CDCgov/NEDSS-Workflows/.github/workflows/Create-github-draft-release.yaml@CNPT-1583-create-github-release
     with:
