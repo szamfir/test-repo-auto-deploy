@@ -47,7 +47,8 @@ on:
  #token permissions
 permissions:
   id-token: write
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   create-draft-release:
